@@ -93,17 +93,18 @@
  ;---------------------------------------------------------------------------------------------------------
 ;The whole idea of ADVERTISING is to make people buy things .
 ;(if for a word, word or root file is not present in wsd and has suffix as -ing in other  morph analysis then load the respective root file)
- (defrule suff_ing
- (declare (salience 1000))
- (id-cat_coarse ?id adjective|noun)
- (not (meaning_has_been_decided ?id))
- (id-original_word ?id ?word)
+ (defrule suff_ing                             ;Defining name for a rule
+ (declare (salience 1000))                     ;Declaring the priority level for a rule to be fired
+ (id-cat_coarse ?id adjective|noun)	       ;Checking whether id is adjective or noun
+ (not (meaning_has_been_decided ?id))	       ;Declaring that this id's meaning is to be decided yet
+ (id-original_word ?id ?word)		       ;Assigning root word of a id in variable word
  (or (word-morph (original_word  ?word)(root ?root)(suffix	ing))(word-morph (original_word  ?word)(root ?root)(suffix      en))(word-morph (original_word  ?word)(root ?root)(suffix      ed)))
- (not (file_loaded ?id))
+ (not (file_loaded ?id))		       ;Cheking whether word or a root word is present in wsd and has a suffix "ing"
   =>
 	(bind ?file (str-cat ?*path* "/WSD/wsd_rules/canonical_form_wsd_rules/" ?root ".clp")	)
+					       ;Loading the clip file for that root word 
         (if (neq (load* ?file) FALSE) then
-            (assert (file_loaded ?id))
+            (assert (file_loaded ?id))         ;Meaning is asserted in the final output 
        	)
  ) 
  ;---------------------------------------------------------------------------------------------------------
