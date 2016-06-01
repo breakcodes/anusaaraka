@@ -93,6 +93,7 @@
  ;---------------------------------------------------------------------------------------------------------
 ;The whole idea of ADVERTISING is to make people buy things .
 ;(if for a word, word or root file is not present in wsd and has suffix as -ing in other  morph analysis then load the respective root file)
+;Inputs to this rule is the id ofthe word we want to retract meaning of. And word is the root word of the id.
  (defrule suff_ing                             ;Defining name for a rule
  (declare (salience 1000))                     ;Declaring the priority level for a rule to be fired
  (id-cat_coarse ?id adjective|noun)	       ;Checking whether id is adjective or noun
